@@ -7,4 +7,9 @@
 5. Now go to the .env file inside the folder *server* and replace my username and password with your database username and password
 6. And hopefully that should work!
 
-# HAPPY CODING!
+
+# Drawbacks
+
+Sincee this was intended to be a very simple sign up form, it doesn't encrypt your password before inserting into Db.
+
+# Happy Coding!
