@@ -85,27 +85,27 @@ router.post('/delete', async (request, response) => {
 })
 router.post('/editemail', async (request, response) => {
     try{
-        const editEmail = await User.updateOne({_id: request.body.id, email: request.body.newemail})
+        const editEmail = await User.updateOne({_id: request.body.id},{ email: request.body.newemail})
         if(editEmail){
             response.send({message: 'Email has successfully been updated'})
         }else{
             response.send({message: 'Some error occurred while updating Email'})
         }
     }catch(error){
-       consolelog('Error 8: ', error.message)
+       console.log('Error 8: ', error.message)
     }
 })
 router.post('/editpass', async (request, response) => {
     try{
         request.body.newpass = Bcrypt.hashSync(request.body.newpass, 10)
-        const editPass = await User.updateOne({_id: request.body.id, password: request.body.newpass})
+        const editPass = await User.updateOne({_id: request.body.id},{ password: request.body.newpass})
         if(editPass){
             response.send({message: 'Password has successfully been updated'})
         }else{
             response.send({message: 'Some error occurred while updating Password'})
         }
     }catch(error){
-       consolelog('Error 9: ', error.message)
+       console.log('Error 9: ', error.message)
     }
 })
 // To handle HTTP POST requests in Express.js, you need to install them middle ware module body-parser. body-parser extracts the entire body portion of an incoming request stream and exposes it on request.body.

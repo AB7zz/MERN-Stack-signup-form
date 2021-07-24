@@ -118,7 +118,7 @@ const App = () => {
     setNewEmail({...newEmail, [e.target.name]: e.target.value, id: e.target.id})
   }
   const openEmailEditor = () => {
-    if(openEdit==true){
+    if(openEdit){
       setOpenEdit(false)
     }else{
       setOpenEdit(true)
@@ -154,7 +154,7 @@ const App = () => {
     }
   }
   const openPassEditor = () => {
-    if(openPass==true){
+    if(openPass){
       setOpenPass(false)
     }else{
       setOpenPass(true)
@@ -204,7 +204,7 @@ const App = () => {
                   <button key={data._id} value={data._id} name="_id" onClick={() => openEmailEditor()}>Edit email</button>
                   {openEdit && 
                     <>
-                      <input id={data._id} onChange={(e)=>newEmailChange(e)} type="text" name="newemail" placeholder="Enter new email" />
+                      <input id={data._id} placeholder={data.email} onChange={(e)=>newEmailChange(e)} type="text" name="newemail" />
                       <button onClick={()=>setTheEmail()}>Confirm</button>
                     </>
                   }

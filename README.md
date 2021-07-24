@@ -7,6 +7,16 @@
 5. Now go to the .env file inside the folder *server* and replace my username and password with your database username and password
 6. And hopefully that should work!
 
+# What is this for?
+
+This is just to understand how a basic login/signup form works using MERN
+
+# What you can do
+1. Create an account
+2. Login to your account
+3. Edit your email/password
+4. Delete your account
+5. Display all accounts in the database
 
 # Drawbacks
 
