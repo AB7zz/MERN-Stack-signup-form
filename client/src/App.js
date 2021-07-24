@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 const url = 'http://localhost:9000'
 const App = () => {
   
@@ -29,8 +29,11 @@ const App = () => {
 
 
 
+
   // Login Form Code Start
   const [login, setLogin] = useState({email: '', password: ''})
+  const [acc, setAccount] = useState()
+  const [signOut, setSignOut] = useState(true)
   const loginForm = (e) => {
     setLogin({...login, [e.target.name]: e.target.value})
   }
@@ -42,9 +45,34 @@ const App = () => {
       return
     }
   }
+  const setData = (data) => {
+    localStorage.setItem('loginEmail', data)
+    let accDetail = localStorage.getItem('loginEmail')
+    setAccount(accDetail)
+    setSignOut(false)
+  }
+  useEffect(()=>{
+    let accDetail = localStorage.getItem('loginEmail')
+    if(accDetail){
+      setAccount(accDetail)
+      setSignOut(false)
+    }else{
+      setSignOut(true)
+    }
+  }, [])
+  const signOutUser = () => {
+    localStorage.removeItem('loginEmail')
+    setAccount()
+    setSignOut(true)
+  }
   const authenticateLogin = async (user) => {
     try{
-      return await axios.post(`${url}/login`, user).then(response => alert(response.data.message))
+      return await axios.post(`${url}/login`, user).then(response => {
+        alert(response.data.message)
+        if(response.data.isLogin){
+          setData(response.data.useremail)
+        }
+      })
     } catch(error){
       console.log('error while calling login api')
     }
@@ -90,7 +118,9 @@ const App = () => {
   const deleteAcc = async (e) => {
     setDelete({...deleteId, [e.target.name]: e.target.value})
     if(deleteId._id === ""){
+      console.log(deleteId)
     }else{
+      console.log(deleteId)
       let response = await authenticateDelete(deleteId)
       window.location.reload()
       if(!response){
@@ -179,6 +209,13 @@ const App = () => {
   return (
     <div className="App">
       <h3 style={{textAlign: 'center'}}>MERN Form</h3>
+      {(acc && (signOut === false)) && 
+        <>
+          <p style={{textAlign: 'center'}}>{acc} has logged in!</p>
+          <button onClick={()=> signOutUser()} style={{display: 'flex', margin: 'auto', marginBottom: '50px'}}>Sign Out</button>
+          <br></br>
+        </>
+      }
       <input onChange = {(e) => signupForm(e)} type="text" name="email" />
       <input onChange = {(e) => signupForm(e)} type="password" name="password" />
       <button onClick = {()=>signupUser()}>Sign up</button>
@@ -193,8 +230,8 @@ const App = () => {
       <br></br>
       <button onClick = {() => displayForm()}>{(displayFormData===false) ? "Display All Data" : "Hide Data"}</button>
       {
-        (form && displayFormData) && 
-            form.map(data=>{
+        displayFormData && 
+            JSON.parse(form).map(data=>{
             return(
               <>
                 <p key={data._id}><b>Username: </b>{data.email}</p>
@@ -231,3 +268,4 @@ const App = () => {
 }
 
 export default App;
+

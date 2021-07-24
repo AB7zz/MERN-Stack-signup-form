@@ -49,12 +49,12 @@ router.post('/login', async (request, response) => {
             const userPassword = existlogin.password
             const hash = Bcrypt.compareSync(request.body.password, userPassword)
             if(hash){
-                response.send({message: `${request.body.email} has successfully logged in`})
+                response.send({message: `${request.body.email} has successfully logged in`, isLogin: true, useremail: `${request.body.email}`})
             }else{
-                response.send({message: 'You have entered the wrong password!'})
+                response.send({message: 'You have entered the wrong password!', isLogin: false}) 
             }
         } else{
-            response.send({message: 'This account does not exist in the database'})
+            response.send({message: 'This account does not exist in the database', isLogin: false})
         }
     } catch (error){
         console.log('Error 4: ', error.message)
@@ -63,7 +63,7 @@ router.post('/login', async (request, response) => {
 router.post('/display', async (request, response) => {
     try{
         const displayData = await User.find()
-        response.send({message: displayData})
+        response.send({message: JSON.stringify(displayData)})
     }catch(error){
         console.log('Error 6: ', error.message)
     }

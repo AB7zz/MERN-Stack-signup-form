@@ -14,9 +14,10 @@ This is just to understand how a basic login/signup form works using MERN
 # What you can do
 1. Create an account
 2. Login to your account
-3. Edit your email/password
-4. Delete your account
-5. Display all accounts in the database
+3. Sign Out of your account
+4. Edit your email/password
+5. Delete your account
+6. Display all accounts in the database
 
 # Drawbacks
 
