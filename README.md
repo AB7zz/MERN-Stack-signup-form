@@ -12,7 +12,7 @@
 This is just to understand how a basic login/signup form works using MERN
 
 # What you can do
-1. Create an account
+1. Create more than one account
 2. Login to your account
 3. Sign Out of your account
 4. Edit your email/password

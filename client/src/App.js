@@ -114,13 +114,15 @@ const App = () => {
 
 
   // Delete Account Code Start
-  const [deleteId, setDelete] = useState({_id: ''})
+  const [deleteId, setDelete] = useState({_id: null})
+  useEffect(() => {
+    setDelete(deleteId)
+  }, [deleteId])
   const deleteAcc = async (e) => {
-    setDelete({...deleteId, [e.target.name]: e.target.value})
-    if(deleteId._id === ""){
+    setDelete({ ...deleteId, [e.target.name]: e.target.value })
+    if(!deleteId._id){
       console.log(deleteId)
     }else{
-      console.log(deleteId)
       let response = await authenticateDelete(deleteId)
       window.location.reload()
       if(!response){
@@ -131,7 +133,9 @@ const App = () => {
   }
   const authenticateDelete = async (id) => {
     try{
-      return await axios.post(`${url}/delete`, id).then(response => alert(response.data.message))
+      return await axios.post(`${url}/delete`, id).then(response => {alert(response.data.message); localStorage.removeItem('loginEmail')
+      setAccount()
+      setSignOut(true)})
     }catch(error){
       console.log('error while calling delete api')
     }
