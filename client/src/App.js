@@ -133,9 +133,11 @@ const App = () => {
   }
   const authenticateDelete = async (id) => {
     try{
-      return await axios.post(`${url}/delete`, id).then(response => {alert(response.data.message); localStorage.removeItem('loginEmail')
-      setAccount()
-      setSignOut(true)})
+      return await axios.post(`${url}/delete`, id).then(response => {
+        alert(response.data.message); localStorage.removeItem('loginEmail')
+        setAccount()
+        setSignOut(true)
+      })
     }catch(error){
       console.log('error while calling delete api')
     }
@@ -150,6 +152,7 @@ const App = () => {
   const[newEmail, setNewEmail] = useState({newemail: '', id: ''})
   const newEmailChange = (e) => {
     setNewEmail({...newEmail, [e.target.name]: e.target.value, id: e.target.id})
+    localStorage.setItem('loginEmail', e.target.value)
   }
   const openEmailEditor = () => {
     if(openEdit){
@@ -217,7 +220,6 @@ const App = () => {
         <>
           <p style={{textAlign: 'center'}}>{acc} has logged in!</p>
           <button onClick={()=> signOutUser()} style={{display: 'flex', margin: 'auto', marginBottom: '50px'}}>Sign Out</button>
-          <br></br>
         </>
       }
       <input onChange = {(e) => signupForm(e)} type="text" name="email" />
@@ -226,12 +228,12 @@ const App = () => {
       <br></br>
       <br></br>
       <br></br>
-      <input onChange = {(e) => loginForm(e)} type="text" name="email" />
+      {(!acc)&&<><input onChange = {(e) => loginForm(e)} type="text" name="email" />
       <input onChange = {(e) => loginForm(e)} type="password" name="password" />
       <button onClick = {()=>loginUser()}>Log in</button>
       <br></br>
       <br></br>
-      <br></br>
+      <br></br></>}
       <button onClick = {() => displayForm()}>{(displayFormData===false) ? "Display All Data" : "Hide Data"}</button>
       {
         displayFormData && 
